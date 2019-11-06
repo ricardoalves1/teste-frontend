@@ -3,14 +3,14 @@
 
     <h1>Listagem de Usuários</h1>
 
-    <input v-model="username" type="text">
+    <input v-model="username" type="text" @keydown.enter="search">
     <button @click="search">Buscar</button>
 
     <div class="users">
       <span v-for="user in users" :key="user.id">
-        <p>
+        <h4><p>
           Login: {{ user.login }}
-        </p>
+        </p></h4>
 
         <img :src="user.avatar_url">
         
@@ -39,7 +39,7 @@
     methods: {
       search: function () {
         if (this.username) {
-          let url = 'https://api.github.com/search/users?q=' + this.username;
+          const url = 'https://api.github.com/search/users?q=' + this.username;
 
           axios.get(url).then((response) => {
             this.users = response.data.items;
@@ -51,7 +51,7 @@
 
       repo: function (login) {
         const url = `https://github.com/${login}?tab=repositories`;
-        window.open(url, '_blanck')
+        window.open(url, '_blank')
       }
     },
 }
@@ -62,5 +62,15 @@
   a {
     color: #42b983;
     cursor: pointer;
+  }
+
+  .users img {
+    width: 420px;
+    height: 420px;
+  }
+
+  input, button {
+    margin: 5px;
+    padding: 3px;
   }
 </style>
